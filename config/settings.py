@@ -136,4 +136,7 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-INSTAGRAM_SESSION_PATH = os.path.join(BASE_DIR, 'sessions', 'instagram_session.json')
+INSTAGRAM_SESSION_PATH = os.path.join(BASE_DIR, 'instagram_sessions')
+INSTAGRAM_SESSION_KEY = 'istagram_key'
+INSTAGRAM_SESSION_USERNAME = 'instagram_username'
+INSTAGRAM_SESSION_ISLOGGEDIN = 'instagram_isloggedin'
