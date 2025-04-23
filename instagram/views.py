@@ -71,7 +71,8 @@ class Profile(generic.View):
 
 
 
-
+   
+@method_decorator(decorators.login_required,name = 'dispatch')
 class GetBio(generic.View):
     def post(self, request, *args, **kwargs):
         username = request.POST.get("username")
@@ -108,7 +109,7 @@ class GetBio(generic.View):
 
 
 
-
+@method_decorator(decorators.guest_required,name = 'dispatch')
 class EditBio(generic.FormView):
     template_name = 'instagram-editbio.html'
     form_class = forms.Bio
