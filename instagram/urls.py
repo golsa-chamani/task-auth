@@ -3,7 +3,7 @@ from . import views
 
 urlpatterns = [
     path('login/', views.Login.as_view(), name='instagram-login'),
+    path('logout/', views.Logout.as_view(), name='instagram-logout'),
     path('profile/', views.Profile.as_view(), name='instagram-profile'),
-    path('bio/',views.GetBio.as_view(),name = 'instagram-bio'),
-    path('editbio/',views.EditBio.as_view(),name = 'instagram-editbio'),
+    path('profile/edit',views.ProfileEdit.as_view(),name = 'instagram-profile-edit'),
 ]

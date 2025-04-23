@@ -1,7 +1,47 @@
-{% extends "base.html" %}
-{% block title %}login_instagram{% endblock  %}
+{% extends 'base.html' %}
+{% block title %}
+  Instagram Profile
+{% endblock %}
 {% block content %}
-successfuly login to instagram
-
-
+  <div class="row">
+    <div class="col-6 m-auto">
+      {% if error %}
+        <div class="row">
+          <p>
+            <span>Error:</span>
+            <span>{{ error }}</span>
+          </p>
+        </div>
+      {% else %}
+        <div class="row">
+          <p>
+            <span>Username:</span>
+            <span>{{ username }}</span>
+          </p>
+        </div>
+        <div class="row">
+          <p>
+            <span>Bio:</span>
+            <span>{{ bio }}</span>
+          </p>
+        </div>
+        <div class="row">
+          <p>
+            <span>Full name:</span>
+            <span>{{ full_name }}</span>
+          </p>
+        </div>
+        <div class="row">
+          <div class="col">
+            <a class="btn btn-success" href="{% url 'instagram-profile-edit' %}">Edit Profile</a>
+          </div>
+        </div>
+      {% endif %}
+      <div class="row">
+        <div class="col mt-2">
+          <a class="btn btn-danger" href="{% url 'instagram-logout' %}">logout</a>
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock %}

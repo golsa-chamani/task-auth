@@ -172,5 +172,5 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
-# Ignore Django session files
-sessions/
+# Ignore instagram session files
+instagram_sessions/

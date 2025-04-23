@@ -3,17 +3,15 @@
   Login
 {% endblock %}
 {% block content %}
-  <main class="form-signin w-100 m-auto">
-    <div class="row">
-      <div class="col-3 m-auto">
-        <form action="" method="POST">
-          <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+  <div class="row">
+    <div class="col-6 m-auto">
+      <form action="" method="POST" class="form-signinm-auto">
+        <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 
-          {% csrf_token %}
-          {{ form.as_p }}
-          <button class="btn btn-primary w-100 py-2" type="submit">Sign in</button>
-        </form>
-      </div>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="btn btn-primary w-100 py-2" type="submit">Sign in</button>
+      </form>
     </div>
-  </main>
+  </div>
 {% endblock %}

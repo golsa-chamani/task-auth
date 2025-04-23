@@ -1,46 +1,71 @@
-
-from django.forms import Form, PasswordInput, TextInput, CharField,Textarea
+from django.forms import Form, PasswordInput, TextInput, CharField, Textarea
 from django.core.exceptions import ValidationError
-
+from . import models
 
 
 class Login(Form):
-    username = CharField(label="", widget=TextInput(
-        attrs={'class': 'form-control', 'placeholder': 'Username'}))
-    password = CharField(label="", widget=PasswordInput(
-        attrs={'class': 'form-control', 'placeholder': 'Password'}))
-
+    username = CharField(
+        label="",
+        widget=TextInput(attrs={"class": "form-control", "placeholder": "Username"}),
+    )
+    password = CharField(
+        label="",
+        widget=PasswordInput(
+            attrs={"class": "form-control", "placeholder": "Password"}
+        ),
+    )
 
     def clean(self):
-        cleaned_data= super().clean()
-        username = cleaned_data.get('username')
-        password = cleaned_data.get('password')
-        if username=='':
+        cleaned_data = super().clean()
+        username = cleaned_data.get("username")
+        password = cleaned_data.get("password")
+        if username == "":
             raise ValidationError("please provide a username.")
-        if password=='':
+        if password == "":
             raise ValidationError("please provide a password.")
-        
+
         return cleaned_data
 
-class Bio(Form):
-    new_bio = CharField(
-    label="new_biography",
-        max_length=150,
+
+class ProfileEdit(Form):
+    bio = CharField(
+        label="",
+        max_length=1024,
         required=True,
-        widget=Textarea(attrs={
-            "placeholder": "inter yor bio",
-            "class": "form-control",
-            "rows": 4
-        })
+        widget=Textarea(
+            attrs={
+                "placeholder": "Biography",
+                "class": "form-control",
+                "rows": 18,
+                "cols": 64,
+            }
+        ),
     )
-    def clean(self):
-        bio = self.cleaned_data.get("new_bio")
 
+    full_name = CharField(
+        label="",
+        max_length=64,
+        required=True,
+        widget=TextInput(
+            attrs={
+                "class": "form-control",
+                "placeholder": "Full Name",
+            },
+        ),
+    )
+
+    def __init__(self, *args, **kwargs):
+        account_info = kwargs.pop("account_info", None)
+        super().__init__(*args, **kwargs)
+        self.fields["bio"].initial = account_info.get('bio')
+        self.fields["full_name"].initial = account_info.get('full_name')
+
+    def clean_bio(self):
+        bio = self.cleaned_data.get("bio")
         if "http" in bio.lower():
-            raise ValidationError("bio does not have link")
-
+            raise ValidationError("bio should not have link")
         return bio
-    
 
-
-        
+    def clean_full_name(self):
+        full_name = self.cleaned_data.get("full_name")
+        return full_name
