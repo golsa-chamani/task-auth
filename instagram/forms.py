@@ -1,5 +1,5 @@
 
-from django.forms import Form, PasswordInput, TextInput, CharField
+from django.forms import Form, PasswordInput, TextInput, CharField,Textarea
 from django.core.exceptions import ValidationError
 
 
@@ -22,3 +22,25 @@ class Login(Form):
         
         return cleaned_data
 
+class Bio(Form):
+    new_bio = CharField(
+    label="new_biography",
+        max_length=150,
+        required=True,
+        widget=Textarea(attrs={
+            "placeholder": "inter yor bio",
+            "class": "form-control",
+            "rows": 4
+        })
+    )
+    def clean(self):
+        bio = self.cleaned_data.get("new_bio")
+
+        if "http" in bio.lower():
+            raise ValidationError("bio does not have link")
+
+        return bio
+    
+
+
+        
