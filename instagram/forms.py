@@ -55,10 +55,11 @@ class ProfileEdit(Form):
     )
 
     def __init__(self, *args, **kwargs):
-        account_info = kwargs.pop("account_info", None)
+        bio = kwargs.pop("bio", None)
+        full_name = kwargs.pop("full_name", None)
         super().__init__(*args, **kwargs)
-        self.fields["bio"].initial = account_info.get('bio')
-        self.fields["full_name"].initial = account_info.get('full_name')
+        self.fields["bio"].initial = bio
+        self.fields["full_name"].initial = full_name
 
     def clean_bio(self):
         bio = self.cleaned_data.get("bio")

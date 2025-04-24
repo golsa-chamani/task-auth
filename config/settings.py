@@ -137,4 +137,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 INSTAGRAM_SESSION_PATH = os.path.join(BASE_DIR, 'instagram_sessions')
-INSTAGRAM_SESSION_KEY = 'istagram_key'
+INSTAGRAM_SESSION_KEY = 'instagram_key'

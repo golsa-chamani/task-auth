@@ -19,15 +19,15 @@ class Login(generic.FormView):
     def form_valid(self, form):
         username = form.cleaned_data.get("username")
         password = form.cleaned_data.get("password")
-        instagram_key = str(uuid.uuid4())
-        session_path = f"{settings.INSTAGRAM_SESSION_PATH}/{instagram_key}.json"
+        instagram_uuid = str(uuid.uuid4())
+        session_path = f"{settings.INSTAGRAM_SESSION_PATH}/{instagram_uuid}.json"
 
         try:
             cl = Client()
             cl.login(username, password)
             cl.dump_settings(session_path)
             request = self.request
-            request.session[settings.INSTAGRAM_SESSION_KEY] = instagram_key
+            request.session[settings.INSTAGRAM_SESSION_KEY] = instagram_uuid
             request.session.modified = True
             return super().form_valid(form)
 
@@ -41,11 +41,11 @@ class Logout(generic.View):
         if hasattr(request, 'instagram_client'):
             cl = request.instagram_client
             cl.logout()
-        instagram_key = request.session.get(settings.INSTAGRAM_SESSION_KEY)
-        if instagram_key:
+        instagram_uuid = request.session.get(settings.INSTAGRAM_SESSION_KEY)
+        if instagram_uuid:
             del request.session[settings.INSTAGRAM_SESSION_KEY]
             request.session.modified = True
-            session_path = f"{settings.INSTAGRAM_SESSION_PATH}/{instagram_key}.json"
+            session_path = f"{settings.INSTAGRAM_SESSION_PATH}/{instagram_uuid}.json"
             try:
                 os.remove(session_path)
             except Exception as e:
@@ -81,11 +81,8 @@ class ProfileEdit(generic.FormView):
         request = self.request
         cl = request.instagram_client
         account = cl.account_info()
-        account_info = {
-            "bio": account.biography,
-            "full_name": account.full_name,
-        }
-        kwargs.update({"account_info": account_info})
+        kwargs.update({"bio": account.biography})
+        kwargs.update({"full_name": account.full_name})
 
         return kwargs
 
