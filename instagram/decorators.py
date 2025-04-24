@@ -6,7 +6,7 @@ from instagrapi import Client
 
 def login_required(view_func):
     def wraper(request, *args, **kwargs):
-        instagram_key = request.session[settings.INSTAGRAM_SESSION_KEY]
+        instagram_key = request.session.get(settings.INSTAGRAM_SESSION_KEY)
         session_path = f"{settings.INSTAGRAM_SESSION_PATH}/{instagram_key}.json"
         try:
             cl = Client()
